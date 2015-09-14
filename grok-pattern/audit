@@ -1,0 +1,14 @@
+AUDITTYPE  type=%{WORD:audit_type}
+AUDITTIMESTAMP msg=audit\(%{NUMBER:audit_epoch}:%{NUMBER:audit_counter}\): user
+AUDITTYPETIME %{AUDITTYPE} %{AUDITTIMESTAMP}
+
+
+AUDITLOGMSG %{AUDITPID} %{AUDITUID} %{AUDITAUID } %{AUDITSES } %{AUDITMSG}
+
+AUDITPID pid=%{NUMBER:audit_pid}
+AUDITUID uid=%{NUMBER:audit_uid}
+AUDITAUID auid=%{NUMBER:audit_auid}
+AUDITSES ses=%{NUMBER:audit_ses}
+AUDITMSG msg=%{GREEDYDATA:audit_message}
+
+AUDIT %{AUDITTYPETIME} %{AUDITLOGMSG}
