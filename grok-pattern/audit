@@ -1,9 +1,10 @@
-AUDITTYPE  type=%{WORD:audit_type}
-AUDITTIMESTAMP msg=audit\(%{NUMBER:audit_epoch}:%{NUMBER:audit_counter}\): user
+AUDITTYPE type=%{WORD:audit_type}
+AUDITTIMESTAMP msg=audit\(%{NUMBER:audit_epoch}:%{NUMBER:audit_counter}\):
 AUDITTYPETIME %{AUDITTYPE} %{AUDITTIMESTAMP}
 
-
 AUDITLOGMSG %{AUDITPID} %{AUDITUID} %{AUDITAUID } %{AUDITSES } %{AUDITMSG}
+
+
 
 AUDITPID pid=%{NUMBER:audit_pid}
 AUDITUID uid=%{NUMBER:audit_uid}
@@ -11,4 +12,9 @@ AUDITAUID auid=%{NUMBER:audit_auid}
 AUDITSES ses=%{NUMBER:audit_ses}
 AUDITMSG msg=%{GREEDYDATA:audit_message}
 
-AUDIT %{AUDITTYPETIME} %{AUDITLOGMSG}
+OLDAUID old\ auid=%{NUMBER:old_auid}
+NEWAUID new\ auid=%{NUMBER:new_auid}
+
+AUDIT %{AUDITTYPETIME} user %{AUDITLOGMSG}
+
+AUDITLOGIN %{AUDITTYPETIME} %{AUDITPID} %{AUDITUID} %{OLDAUID} %{NEWAUID} old ses=%{NUMBER:old_ses} new ses=%{NUMBER:new_ses}
