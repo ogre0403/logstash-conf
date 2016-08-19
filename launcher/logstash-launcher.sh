@@ -29,10 +29,10 @@ if [ "$1" == start ]; then
     # START forward logstash in host which execute launcher script
     isexist=`ssh $USER@$FORWARDER "ps aux |grep java" | grep "forward.conf"` 
     if [[ -z "$isexist" ]]; then
-        echo "start forward agent in $HOSTNAME"
+        echo "start forward agent in $FORWARDER"
         ssh -f $USER@$FORWARDER "$LS_HOME/bin/logstash agent -f $LS_HOME/forward.conf" > /dev/null 2>&1
     else
-        echo forward agent already running $HOSTNAME
+        echo forward agent already running $FORWARDER
     fi 
 fi
 
@@ -57,7 +57,7 @@ if [ "$1" == stop ]; then
         echo "kill forward agent ($logPID) on $FORWARDER"
         ssh $USER@$FORWARDER " kill $logPID"
     else
-        echo logstash already shutdown in $h
+        echo logstash already shutdown in $FORWARDER
     fi
 fi
 
